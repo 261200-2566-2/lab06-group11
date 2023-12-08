@@ -21,6 +21,8 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
 
     private double runSpeed;
 
+    /*
+    */
     public Equipment(String[] hero, String[] sword, String[] shield) {
         super(hero);
 
@@ -35,6 +37,10 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         this.levelShield = 1;
     }
 
+    /*
+    * แสดง status พื้นฐาน
+    * effect: แสดงผล status พื่นฐานออกทางหน้าจอ
+    */
     @Override
     public void status() {
         update();
@@ -60,6 +66,10 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         if(!nameLeg.isEmpty()) runSpeed += 2;
     }
 
+    /*
+    * แสดง status ของ Equipment
+    * effect: แสดงผล status ของEquipment ออกทางหน้าจอ
+    */
     public void statusEquipment() {
         System.out.println("///////////// " + name + " /////////////////");
         System.out.println("Equipped Sword: " + nameSword);
@@ -74,21 +84,36 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         System.out.println("///////////////////////////////////////////");
     }
 
+    /*
+    * โจมตี
+    * effect: ลด Mana, ทำการโจมตี enemy
+    *         และแสดงผลออกทางหน้าจอ
+    */
     @Override
-    public int attack(RPGCharacter enemy) {
+    public void attack(RPGCharacter enemy) {
         decreaseMana(3);
         enemy.decreaseHP(swordDamage);
         System.out.println(name + " attacks " + enemy.getName());
         System.out.println("ทำให้ HP ของ " + enemy.getName() + " ลดเหลือ: " + enemy.getCurrentHP());
-        return 0;
     }
 
+    /*
+    * ป้องกันดาเมจตาม shieldDef ที่มี
+    * effect: ลดค่าของ Mana, เปลี่ยนแปลง HP ขึ้นตาม shieldDef
+    *         และแสดงผลข้อมูลออกทางหน้าจอ
+    */
     public void def() {
         decreaseMana(3);
         decreaseHP(-shieldDef);
         System.out.println(name + " ป้องกันไว้ได้บางส่วน ทำให้เหลือ HP: " + getCurrentHP());
     }
 
+    /*
+    * เพิ่มบัพให้กับเพื่อน
+    * effect: ลดค่าของ Mana ,เรียกfriendBuff()ใน RPGCharacters
+    *         ,เพื่มค่า swordDamage,shieldDef
+    *         และแสดงผลข้อมูลออกทางหน้าจอ
+    */
     @Override
     public void friendBuff() {
         decreaseMana(6);
@@ -99,6 +124,11 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         System.out.println(name + " ใช้ friendBuff ทำให้ HP+30 Def+15 Damage+5");
     }
 
+    /*
+    * วิชาตัวเบา
+    * effect: ลดค่าของ Mana , เพิ่ม MoveSpeed
+    *         ,แสดงผลข้อมูลออกทางหน้าจอ
+    */
     @Override
     public void lostWeight() {
         decreaseMana(5);
@@ -106,11 +136,11 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         System.out.println(name + " ใช้วิชาตัวเบาทำให้ Move Speed ลดลง 2");
     }
 
-    @Override
-    public int friendHealing() {
-        return 0;
-    }
-
+    /*
+    * สร้างเกราะป้องกันบาเรีย
+    * effect: ลดค่าของ Mana , เพิ่ม HP
+    *         ,แสดงผลข้อมูลออกทางหน้าจอ
+    */
     @Override
     public void barrier() {
         decreaseMana(10);
@@ -118,6 +148,11 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         System.out.println(name + " สร้างบาเรียป้องกัน 100 ดาเมจ ทำให้ HP: " + getCurrentHP());
     }
 
+    /*
+    * เพิ่ม HP
+    * effect: ลดค่าของ Mana , เพิ่ม HP
+    *         ,แสดงผลข้อมูลออกทางหน้าจอ
+    */
     @Override
     public void friendhealing() {
         decreaseMana(10);
@@ -125,6 +160,11 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         System.out.println(name + " ได้เพิ่มเลือด ทำให้ HP+20");
     }
 
+    /*
+    * วิชาวิ่งไว
+    * effect: ลดค่าของ Mana , เพิ่ม MoveSpeed
+    *         ,แสดงผลข้อมูลออกทางหน้าจอ
+    */
     @Override
     public void getSpeed() {
         decreaseMana(2);
@@ -132,6 +172,11 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         System.out.println(name + " ได้วิ่งไว ทำให้ MoveSpeed=16");
     }
 
+    /*
+    * วิชาโจมตีแรง
+    * effect: ลดค่าของ Mana , เพิ่ม swordDamage
+    *         ,แสดงผลข้อมูลออกทางหน้าจอ
+    */
     @Override
     public void getAtk() {
         decreaseMana(6);
@@ -139,27 +184,47 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         System.out.println(name + " ได้เพิ่มความแรงดาบ ทำให้ Damage เพิ่ม");
     }
 
+    /*
+    * วิชาเพิ่มเลือด
+    * effect: ลดค่าของ Mana , เพิ่ม HP
+    */
     @Override
     public void getHP() {
         decreaseMana(6);
         currentHP += 500;
     }
 
+    /*
+    * ทำท่ายิ้ม
+    * effect: แสดงผลท่ายิ้ม
+    */
     @Override
     public void emoteSmile() {
         System.out.println(name + " ทำท่า 😆");
     }
 
+    /*
+    * ทำท่าหัวใจ
+    * effect: แสดงผลท่าหัวใจ
+    */
     @Override
     public void emoteLove() {
         System.out.println(name + " ทำท่า 🫶");
     }
 
+    /*
+    * ทำท่าเบ่งกล้าม
+    * effect: แสดงผลท่าเบ่งกล้าม
+    */
     @Override
     public void emoteHulk() {
         System.out.println(name + " ทำท่า 💪");
     }
 
+    /*
+    * แสดง status ของ Accessories
+    * effect: แสดงผล status ออกมาทางหน้าจอ
+    */
     @Override
     public void statusAccessories() {
         System.out.println("///////////////////////////////////////////");
@@ -168,11 +233,19 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         System.out.println("///////////////////////////////////////////");
     }
 
+    /*
+    * ทำท่าฟักยู
+    * effect: แสดงผลท่าฟักยู
+    */
     @Override
     public void fuckyouEmote() {
         System.out.println(name + " ทำท่า 👃");
     }
 
+    /*
+    * ใส่ Accessories ที่แขน
+    * effect: ใส่ Accessories ชิ้นนั้นถ้ามี
+    */
     @Override
     public void getArm(String arm) {
         if (arm.equals("Ring") || arm.equals("Gauntlet") || arm.equals("Bracelet")) {
@@ -183,16 +256,28 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         }
     }
 
+    /*
+    * ทำท่าตบ
+    * effect: แสดงผลท่าตบ
+    */
     @Override
     public void snapEmote() {
         System.out.println(name + " ทำท่า 👋");
     }
 
+    /*
+    * ทำท่าชูสองนิ้ว
+    * effect: แสดงผลท่าชูสองนิ้ว
+    */
     @Override
     public void holdUp2FingerEmote() {
         System.out.println(name + " ทำท่า ✌️");
     }
 
+    /*
+    * ใส่ Accessories ที่ขา
+    * effect: ใส่ Accessories ชิ้นนั้นถ้ามี
+    */
     @Override
     public void getLeg(String leg) {
         if (leg.equals("Boots") || leg.equals("Anklet")) {
@@ -203,11 +288,19 @@ public class Equipment extends RPGCharacters implements UnjiMan, SpermMan, Penni
         }
     }
 
+    /*
+    * ทำท่าแตะ
+    * effect: แสดงผลท่าแตะ
+    */
     @Override
     public void kickEmote() {
         System.out.println(name + " ทำท่า 🦵");
     }
 
+    /*
+    * ทำท่าหกสูง
+    * effect: แสดงผลท่าหกสูง
+    */
     @Override
     public void handStandEmote() {
         System.out.println(name + " ทำท่า 🤸‍♀️");

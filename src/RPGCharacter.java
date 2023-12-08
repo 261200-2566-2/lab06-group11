@@ -1,6 +1,6 @@
 interface RPGCharacter {
     void status();
-    int attack(RPGCharacter enemy);
+    void attack(RPGCharacter enemy);
     void def();
     void decreaseHP(double i);
     void decreaseMana(double i);
@@ -9,8 +9,6 @@ interface RPGCharacter {
     double getCurrentMana();
     void friendBuff();
     void lostWeight();
-    int friendHealing();
-    int resurrect(String nameFriend);
     void barrier();
     void friendhealing();
     void getSpeed();
